@@ -36,7 +36,10 @@ param (
     [string]$CreatedBy,
 
     [Parameter(Mandatory = $true)]
-    [string]$LicenseName
+    [string]$LicenseName,
+
+    [Parameter(Mandatory = $true)]
+    [bool]$AddPax8License
 )
 
 Import-Module OnboardingUtilities
@@ -63,6 +66,50 @@ if ($atCredentials.Count -eq 0) {
 $atPicklist = Get-AutoTaskTicketPicklist $atCredentials
 if ($atPicklist.Count -eq 0) {
     throw "Autotask ticket picklist not found"
+}
+
+
+if ($AddPax8License) {
+    $pax8SecretNames = @("Pax8-client-id", "Pax8-client-secret")
+    $pax8Credentials = @{}
+    foreach ($sn in $pax8SecretNames) {
+        $name = $sn.Replace("Pax8-", "")
+        $name = $name.Replace("-", "_")
+        $secret = Get-AzKeyVaultSecret -VaultName "IntegridAPIKeys" -Name $sn
+        $value = ConvertFrom-SecureString $secret.SecretValue -AsPlainText
+        $pax8Credentials.Add($name, $value)
+    }
+    if ($pax8Credentials.Count -eq 0) {
+        Write-Error "Pax8 API credentials not found" -ErrorAction Stop
+    }
+
+    $token = Get-Pax8Token -Credentials $pax8Credentials
+    $companyId = Get-Pax8CompanyId -CompanyName $InputParameters.CompanyName -Token $token
+    $productId = Search-Pax8ProductIds $InputParameters.LicenseName
+    $subscription = Get-Pax8Subscription -CompanyId $companyId -ProductId $productId -Token $token
+    $qtyIncremented = $subscription.quantity + 1
+    $respAddLicense = Add-Pax8Subscription -SubscriptionId $subscription.id -Quantity $qtyIncremented -Token $token
+    if ($null -eq $respAddLicense) {
+        Write-Error "Failed to add license to PAX8 subscription" -ErrorAction Stop
+    }
+    else {
+        Write-Output "=> License added to PAX8 subscription id: $($respAddLicense.id)"
+    }
+    
+    # Check license quantities in M365 every 30 seconds until new one shows up.
+    do {
+        Start-Sleep -Seconds 30
+        $licenseData = Get-LicenseData $InputParameters.LicenseName
+    }
+    while ($licenseData.ConsumedUnits -ge $licenseData.PrepaidUnits.Enabled)
+    $respAssignLicense = Set-MgUserLicense -UserId $Returns.UserPrincipalName -AddLicenses @{SkuId = $Returns.LicenseData.SkuId } -RemoveLicenses @()
+    if ($null -eq $respAssignLicense) {
+        Write-Error "Failed to assign license `"$($InputParameters.LicenseName)`" to $($Returns.UserPrincipalName)" `
+            -ErrorAction Stop
+    }
+    else {
+        Write-Output "=> License `"$($InputParameters.LicenseName)`" assigned to $($respAssignLicense.DisplayName)"
+    }
 }
 
 
