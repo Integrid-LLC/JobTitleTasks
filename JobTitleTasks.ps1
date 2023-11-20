@@ -39,6 +39,9 @@ param (
     [string]$LicenseName,
 
     [Parameter(Mandatory = $true)]
+    [string]$CompanyName,
+
+    [Parameter(Mandatory = $true)]
     [bool]$AddPax8License
 )
 
@@ -84,8 +87,8 @@ if ($AddPax8License) {
     }
 
     $token = Get-Pax8Token -Credentials $pax8Credentials
-    $companyId = Get-Pax8CompanyId -CompanyName $InputParameters.CompanyName -Token $token
-    $productId = Search-Pax8ProductIds $InputParameters.LicenseName
+    $companyId = Get-Pax8CompanyId -CompanyName $CompanyName -Token $token
+    $productId = Search-Pax8ProductIds $LicenseName
     $subscription = Get-Pax8Subscription -CompanyId $companyId -ProductId $productId -Token $token
     $qtyIncremented = $subscription.quantity + 1
     $respAddLicense = Add-Pax8Subscription -SubscriptionId $subscription.id -Quantity $qtyIncremented -Token $token
@@ -99,16 +102,15 @@ if ($AddPax8License) {
     # Check license quantities in M365 every 30 seconds until new one shows up.
     do {
         Start-Sleep -Seconds 30
-        $licenseData = Get-LicenseData $InputParameters.LicenseName
+        $licenseData = Get-LicenseData $LicenseName
     }
     while ($licenseData.ConsumedUnits -ge $licenseData.PrepaidUnits.Enabled)
-    $respAssignLicense = Set-MgUserLicense -UserId $Returns.UserPrincipalName -AddLicenses @{SkuId = $Returns.LicenseData.SkuId } -RemoveLicenses @()
+    $respAssignLicense = Set-MgUserLicense -UserId $UPN -AddLicenses @{SkuId = $LicenseData.SkuId } -RemoveLicenses @()
     if ($null -eq $respAssignLicense) {
-        Write-Error "Failed to assign license `"$($InputParameters.LicenseName)`" to $($Returns.UserPrincipalName)" `
-            -ErrorAction Stop
+        Write-Error "Failed to assign license `"$($LicenseName)`" to $($UPN)" -ErrorAction Stop
     }
     else {
-        Write-Output "=> License `"$($InputParameters.LicenseName)`" assigned to $($respAssignLicense.DisplayName)"
+        Write-Output "=> License `"$($LicenseName)`" assigned to $($respAssignLicense.DisplayName)"
     }
 }
 
