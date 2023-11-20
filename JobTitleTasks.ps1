@@ -30,7 +30,13 @@ param (
     [string[]]$CommunityEmails,
 
     [Parameter(Mandatory = $false)]
-    [string[]]$Equipment
+    [string[]]$Equipment,
+
+    [Parameter(Mandatory = $true)]
+    [string]$CreatedBy,
+
+    [Parameter(Mandatory = $true)]
+    [string]$LicenseName
 )
 
 Import-Module OnboardingUtilities
