@@ -12,6 +12,9 @@ param (
     [int]$AutoTaskTicketId,
 
     [Parameter(Mandatory = $true)]
+    [string]$AutoTaskTicketNumber,
+
+    [Parameter(Mandatory = $true)]
     [string]$FirstName,
 
     [Parameter(Mandatory = $true)]
@@ -151,7 +154,7 @@ if ($JobTitle -eq "Manager") {
         Write-Warning "=> Failed to close AutoTask ticket"
     }
     else {
-        Write-Output "=> AutoTask ticket closed with Id: $($respCloseTicket.ItemId)"
+        Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber closed."
     }
 }
 
@@ -240,7 +243,7 @@ elseif ($JobTitle -eq "Regional") {
         Write-Warning "=> Failed to update ticket"
     }
     else {
-        Write-Output "=> AutoTask ticket with Id: $($respUpdateTicket.ItemId) updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
+        Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
     }
 }
 
@@ -293,7 +296,7 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
         Write-Output "=> Failed to update ticket"
     }
     else {
-        Write-Output "=> AutoTask ticket with Id: $($respUpdateTicket.ItemId) updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
+        Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
     }
 }
 
@@ -335,7 +338,7 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
         Write-Output "=> Failed to update ticket"
     }
     else {
-        Write-Output "=> AutoTask ticket with Id: $($respUpdateTicket.ItemId) updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
+        Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
     }
 }
 
@@ -388,7 +391,7 @@ elseif ($JobTitle -eq "Corporate - Management") {
         Write-Output "=> Failed to update ticket"
     }
     else {
-        Write-Output "=> AutoTask ticket with Id: $($respUpdateTicket.ItemId) updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
+        Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
     }
 }
 
@@ -404,7 +407,7 @@ elseif ($JobTitle -eq "Maintenance") {
         Write-Output "=> Failed to close ticket"
     }
     else {
-        Write-Output "=> AutoTask ticket closed with Id: $($respCloseTicket.ItemId)"
+        Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber closed."
     }
 }
 
