@@ -21,7 +21,7 @@ param (
     [string]$LastName,
 
     [Parameter(Mandatory = $true)]
-    [string]$UPN,
+    [string]$UserPrincipalName,
 
     [Parameter(Mandatory = $true)]
     [string]$JobTitle,
@@ -108,9 +108,9 @@ if ($AddPax8License) {
         $licenseData = Get-LicenseData $LicenseName
     }
     while ($licenseData.ConsumedUnits -ge $licenseData.PrepaidUnits.Enabled)
-    $respAssignLicense = Set-MgUserLicense -UserId $UPN -AddLicenses @{SkuId = $LicenseData.SkuId } -RemoveLicenses @()
+    $respAssignLicense = Set-MgUserLicense -UserId $UserPrincipalName -AddLicenses @{SkuId = $LicenseData.SkuId } -RemoveLicenses @()
     if ($null -eq $respAssignLicense) {
-        Write-Error "Failed to assign license `"$($LicenseName)`" to $($UPN)" -ErrorAction Stop
+        Write-Error "Failed to assign license `"$($LicenseName)`" to $($UserPrincipalName)" -ErrorAction Stop
     }
     else {
         Write-Output "=> License `"$($LicenseName)`" assigned to $($respAssignLicense.DisplayName)"
