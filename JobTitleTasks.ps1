@@ -36,7 +36,10 @@ param (
     [string[]]$Equipment,
 
     [Parameter(Mandatory = $true)]
-    [string]$CreatedBy,
+    [string]$CreatedByEmail,
+
+    [Parameter(Mandatory = $true)]
+    [string]$CreatedByDisplayName,
 
     [Parameter(Mandatory = $true)]
     [string]$LicenseName,
