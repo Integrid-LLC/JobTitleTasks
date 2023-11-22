@@ -122,7 +122,7 @@ if ($AddPax8License) {
 if ($JobTitle -eq "Manager") {
     # First Bank email
     $respFirstBankManager = Send-FirstBankEmail -FirstName $FirstName -LastName $LastName `
-        -UserPrincipalName $upn -JobTitle $JobTitle -Location ($Location -join ", ") `
+        -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
         -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Rio
     if ($respFirstBankManager -eq "Success") {
         Write-Output "=> First Bank email sent"
@@ -132,9 +132,9 @@ if ($JobTitle -eq "Manager") {
     }
 
     # Add to community emails
-    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $upn -SharedMailboxes $communityEmails
+    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $communityEmails
     if ($null -eq $respSharedMailbox) {
-        Write-Warning "=> Failed to add user $upn to community emails"
+        Write-Warning "=> Failed to add user $UserPrincipalName to community emails"
     }
     else {
         foreach ($r in $respSharedMailbox) {
@@ -146,8 +146,8 @@ if ($JobTitle -eq "Manager") {
     # Close ticket
     $closeTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Work Completed~"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Accepted"
+        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Scheduling Required"
+        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Needs Attention"
     }
     $respCloseTicket = Update-AutoTaskTicket -Credentials $atCredentials @closeTicketParams
     if ($null -eq $respCloseTicket) {
@@ -161,7 +161,7 @@ if ($JobTitle -eq "Manager") {
 elseif ($JobTitle -eq "Regional") {
     # First Bank and Credit Card email
     $respFirstBankCCRegional = Send-FirstBankAndCreditCardEmail -FirstName $FirstName -LastName $LastName `
-        -UserPrincipalName $upn -JobTitle $JobTitle -Location ($Location -join ", ") `
+        -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
         -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Rio
     if ($respFirstBankCCRegional -eq "Success") {
         Write-Output "=> First Bank and Credit Card email sent"
@@ -172,7 +172,7 @@ elseif ($JobTitle -eq "Regional") {
 
     # ResMan email
     $respResMan = Send-ResManEmail -FirstName $FirstName -LastName $LastName `
-        -UserPrincipalName $upn -JobTitle $JobTitle -Location ($Location -join ", ") `
+        -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
         -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Ebonie
     if ($respResMan -eq "Success") {
         Write-Output "=> ResMan email sent"
@@ -183,20 +183,20 @@ elseif ($JobTitle -eq "Regional") {
 
     # Add to Regional Managers group
     $regionalsGroupId = Get-MgGroup -Filter "DisplayName eq 'Regional Managers'" | Select-Object -ExpandProperty Id
-    $userId = Get-MgUser -UserId $upn | Select-Object -ExpandProperty Id
+    $userId = Get-MgUser -UserId $UserPrincipalName | Select-Object -ExpandProperty Id
     $regionalsStdErr = & { New-MgGroupMember -GroupId $regionalsGroupId -DirectoryObjectId $userId } 2>&1
     if ($regionalsStdErr.Count -ne 0) {
-        Write-Warning "=> Failed to add user $upn to Regional Managers group"
+        Write-Warning "=> Failed to add user $UserPrincipalName to Regional Managers group"
         Write-Output $regionalsStdErr
     }
     else {
-        Write-Output "=> User $upn added to Regional Managers group"
+        Write-Output "=> User $UserPrincipalName added to Regional Managers group"
     }
     
     # Add to community emails
-    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $upn -SharedMailboxes $communityEmails
+    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $communityEmails
     if ($null -eq $respSharedMailbox) {
-        Write-Warning "=> Failed to add user $upn to community emails"
+        Write-Warning "=> Failed to add user $UserPrincipalName to community emails"
     }
     else {
         foreach ($r in $respSharedMailbox) {
@@ -211,7 +211,7 @@ elseif ($JobTitle -eq "Regional") {
         $equipmentParams = @{
             FirstName            = $FirstName
             LastName             = $LastName
-            UserPrincipalName    = $upn
+            UserPrincipalName    = $UserPrincipalName
             JobTitle             = $JobTitle
             Location             = $Location
             EquipmentList        = $Equipment
@@ -250,7 +250,7 @@ elseif ($JobTitle -eq "Regional") {
 elseif ($JobTitle -eq "Corporate - Accounting") {
     # First Bank Email
     $respFirstBankAccounting = Send-FirstBankEmail -FirstName $FirstName -LastName $LastName `
-        -UserPrincipalName $upn -JobTitle $JobTitle -Location ($Location -join ", ") `
+        -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
         -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Rio
     if ($respFirstBankAccounting -eq "Success") {
         Write-Output "=> First Bank email sent"
@@ -265,7 +265,7 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
         $equipmentParams = @{
             FirstName            = $FirstName
             LastName             = $LastName
-            UserPrincipalName    = $upn
+            UserPrincipalName    = $UserPrincipalName
             JobTitle             = $JobTitle
             Location             = $Location
             EquipmentList        = $Equipment
@@ -307,7 +307,7 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
         $equipmentParams = @{
             FirstName            = $FirstName
             LastName             = $LastName
-            UserPrincipalName    = $upn
+            UserPrincipalName    = $UserPrincipalName
             JobTitle             = $JobTitle
             Location             = $Location
             EquipmentList        = $Equipment
@@ -345,7 +345,7 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
 elseif ($JobTitle -eq "Corporate - Management") {
     # ResMan Email
     $respResMan = Send-ResManEmail -FirstName $FirstName -LastName $LastName `
-        -UserPrincipalName $upn -JobTitle $JobTitle -Location ($Location -join ", ") `
+        -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
         -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Ebonie
     if ($respResMan -eq "Success") {
         Write-Output "=> ResMan email sent"
@@ -360,7 +360,7 @@ elseif ($JobTitle -eq "Corporate - Management") {
         $equipmentParams = @{
             FirstName            = $FirstName
             LastName             = $LastName
-            UserPrincipalName    = $upn
+            UserPrincipalName    = $UserPrincipalName
             JobTitle             = $JobTitle
             Location             = $Location
             EquipmentList        = $Equipment
@@ -399,8 +399,8 @@ elseif ($JobTitle -eq "Maintenance") {
     # Close ticket
     $closeTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Work Completed~"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Accepted"
+        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Scheduling Required"
+        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Needs Attention"
     }
     $respCloseTicket = Update-AutoTaskTicket -Credentials $atCredentials @closeTicketParams
     if ($null -eq $respCloseTicket) {
