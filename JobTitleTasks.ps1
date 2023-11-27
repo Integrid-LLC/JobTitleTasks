@@ -69,12 +69,12 @@ foreach ($sn in $atSecretNames) {
     $atCredentials.Add($name, $value)
 }
 if ($atCredentials.Count -eq 0) {
-    throw "Autotask API credentials not found"
+    Write-Error "Autotask API credentials not found" -ErrorAction Stop
 }
 
 $atPicklist = Get-AutoTaskTicketPicklist $atCredentials
 if ($atPicklist.Count -eq 0) {
-    throw "Autotask ticket picklist not found"
+    Write-Error "Autotask ticket picklist not found" -ErrorAction Stop
 }
 
 
