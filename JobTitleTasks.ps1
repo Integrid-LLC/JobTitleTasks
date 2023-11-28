@@ -149,8 +149,8 @@ if ($JobTitle -eq "Manager") {
     # Close ticket
     $closeTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Scheduling Required"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Needs Attention"
+        Status   = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "status" -Label "Scheduling Required").value
+        QueueId  = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "queueid" -Label "Needs Attention").value
     }
     $respCloseTicket = Update-AutoTaskTicket -Credentials $atCredentials @closeTicketParams
     if ($null -eq $respCloseTicket) {
@@ -238,8 +238,8 @@ elseif ($JobTitle -eq "Regional") {
     # Update ticket status & queue
     $updateTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Waiting Customer"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance"
+        Status   = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "status" -Label "Waiting Customer").value
+        QueueId  = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance").value
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
@@ -291,8 +291,8 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
     # Update ticket status & queue
     $updateTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Waiting Customer"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance"
+        Status   = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "status" -Label "Waiting Customer").value
+        QueueId  = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance").value
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
@@ -333,8 +333,8 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
     # Update ticket status & queue
     $updateTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Waiting Customer"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance"
+        Status   = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "status" -Label "Waiting Customer").value
+        QueueId  = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance").value
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
@@ -386,8 +386,8 @@ elseif ($JobTitle -eq "Corporate - Management") {
     # Update ticket status & queue
     $updateTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Waiting Customer"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance"
+        Status   = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "status" -Label "Waiting Customer").value
+        QueueId  = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "queueid" -Label "Pending Acceptance").value
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
@@ -402,8 +402,8 @@ elseif ($JobTitle -eq "Maintenance") {
     # Close ticket
     $closeTicketParams = @{
         TicketId = $AutoTaskTicketId
-        Status   = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "status" -Label "Scheduling Required"
-        QueueId  = Get-AutoTaskPicklistValue -Picklist $atPicklist -Field "queueid" -Label "Needs Attention"
+        Status   = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "status" -Label "Scheduling Required").value
+        QueueId  = (Get-AutoTaskPicklistItem -Picklist $atPicklist -Field "queueid" -Label "Needs Attention").value
     }
     $respCloseTicket = Update-AutoTaskTicket -Credentials $atCredentials @closeTicketParams
     if ($null -eq $respCloseTicket) {
