@@ -131,13 +131,13 @@ if ($JobTitle -eq "Manager") {
         Write-Output "=> First Bank email sent"
     }
     else {
-        Write-Warning "=> Failed to send First Bank email"
+        Write-Warning "Failed to send First Bank email"
     }
 
     # Add to community emails
     $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $communityEmails
     if ($null -eq $respSharedMailbox) {
-        Write-Warning "=> Failed to add user $UserPrincipalName to community emails"
+        Write-Warning "Failed to add user $UserPrincipalName to community mailboxes $($communityEmails -join ", ")"
     }
     else {
         foreach ($r in $respSharedMailbox) {
@@ -154,7 +154,7 @@ if ($JobTitle -eq "Manager") {
     }
     $respCloseTicket = Update-AutoTaskTicket -Credentials $atCredentials @closeTicketParams
     if ($null -eq $respCloseTicket) {
-        Write-Warning "=> Failed to close AutoTask ticket"
+        Write-Warning "Failed to close AutoTask ticket"
     }
     else {
         Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber closed."
@@ -170,7 +170,7 @@ elseif ($JobTitle -eq "Regional") {
         Write-Output "=> First Bank and Credit Card email sent"
     }
     else {
-        Write-Warning "=> Failed to send First Bank and Credit Card email"
+        Write-Warning "Failed to send First Bank and Credit Card email"
     }
 
     # ResMan email
@@ -189,7 +189,7 @@ elseif ($JobTitle -eq "Regional") {
     $userId = Get-MgUser -UserId $UserPrincipalName | Select-Object -ExpandProperty Id
     $regionalsStdErr = & { New-MgGroupMember -GroupId $regionalsGroupId -DirectoryObjectId $userId } 2>&1
     if ($regionalsStdErr.Count -ne 0) {
-        Write-Warning "=> Failed to add user $UserPrincipalName to Regional Managers group"
+        Write-Warning "Failed to add user $UserPrincipalName to Regional Managers group"
         Write-Output $regionalsStdErr
     }
     else {
@@ -199,7 +199,7 @@ elseif ($JobTitle -eq "Regional") {
     # Add to community emails
     $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $communityEmails
     if ($null -eq $respSharedMailbox) {
-        Write-Warning "=> Failed to add user $UserPrincipalName to community emails"
+        Write-Warning "Failed to add user $UserPrincipalName to community mailboxes $($communityEmails -join ", ")"
     }
     else {
         foreach ($r in $respSharedMailbox) {
@@ -226,7 +226,7 @@ elseif ($JobTitle -eq "Regional") {
             Write-Output "=> Equipment approval email sent to $($equipmentParams.MailRecipient)"
         }
         else {
-            Write-Warning "=> Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
+            Write-Warning "Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
             Write-Output $respEquipment
         }
     }
@@ -243,7 +243,7 @@ elseif ($JobTitle -eq "Regional") {
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
-        Write-Warning "=> Failed to update ticket"
+        Write-Warning "Failed to update ticket"
     }
     else {
         Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
@@ -280,7 +280,7 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
             Write-Output "=> Equipment approval email sent to $($equipmentParams.MailRecipient)"
         }
         else {
-            Write-Output "=> Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
+            Write-Output "Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
             Write-Output $respEquipment
         }
     }
@@ -296,7 +296,7 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
-        Write-Output "=> Failed to update ticket"
+        Write-Output "Failed to update ticket"
     }
     else {
         Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
@@ -322,7 +322,7 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
             Write-Output "=> Equipment approval email sent to $($equipmentParams.MailRecipient)"
         }
         else {
-            Write-Output "=> Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
+            Write-Output "Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
             Write-Output $respEquipment
         }
     }
@@ -338,7 +338,7 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
-        Write-Output "=> Failed to update ticket"
+        Write-Output "Failed to update ticket"
     }
     else {
         Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
@@ -375,7 +375,7 @@ elseif ($JobTitle -eq "Corporate - Management") {
             Write-Output "=> Equipment approval email sent to $($equipmentParams.MailRecipient)"
         }
         else {
-            Write-Output "=> Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
+            Write-Output "Failed to send equipment approval email to $($equipmentParams.MailRecipient)"
             Write-Output $respEquipment
         }
     }
@@ -391,7 +391,7 @@ elseif ($JobTitle -eq "Corporate - Management") {
     }
     $respUpdateTicket = Update-AutoTaskTicket -Credentials $atCredentials @updateTicketParams
     if ($null -eq $respUpdateTicket) {
-        Write-Output "=> Failed to update ticket"
+        Write-Output "Failed to update ticket"
     }
     else {
         Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber updated to status 'Waiting Customer' and queue 'Pending Acceptance'"
@@ -407,7 +407,7 @@ elseif ($JobTitle -eq "Maintenance") {
     }
     $respCloseTicket = Update-AutoTaskTicket -Credentials $atCredentials @closeTicketParams
     if ($null -eq $respCloseTicket) {
-        Write-Output "=> Failed to close ticket"
+        Write-Output "Failed to close ticket"
     }
     else {
         Write-Output "=> AutoTask ticket number $AutoTaskTicketNumber closed."
@@ -415,7 +415,7 @@ elseif ($JobTitle -eq "Maintenance") {
 }
 
 else {
-    Write-Error "Unknown job title $JobTitle" -Category InvalidArgument
+    Write-Error "Unknown job title $JobTitle" -Category InvalidArgument -ErrorAction Stop
 }
 
 # Delete one-time schedule
