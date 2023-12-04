@@ -126,7 +126,7 @@ if ($JobTitle -eq "Manager") {
     # First Bank email
     $respFirstBankManager = Send-FirstBankEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Rio
+        -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
     if ($respFirstBankManager -eq "Success") {
         Write-Output "=> First Bank email sent"
     }
@@ -165,7 +165,7 @@ elseif ($JobTitle -eq "Regional") {
     # First Bank and Credit Card email
     $respFirstBankCCRegional = Send-FirstBankAndCreditCardEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Rio
+        -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
     if ($respFirstBankCCRegional -eq "Success") {
         Write-Output "=> First Bank and Credit Card email sent"
     }
@@ -176,7 +176,7 @@ elseif ($JobTitle -eq "Regional") {
     # ResMan email
     $respResMan = Send-ResManEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Ebonie
+        -MailRecipient "Ebonie.Smith@wynnefieldproperties.com"
     if ($respResMan -eq "Success") {
         Write-Output "=> ResMan email sent"
     }
@@ -219,7 +219,7 @@ elseif ($JobTitle -eq "Regional") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "dave@integrid.net" # TODO: Replace w/ Chrystal Rhodes in production (no default)
+            MailRecipient        = "Chrystal.Rhodes@wynnefieldproperties.com"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
@@ -254,7 +254,7 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
     # First Bank Email
     $respFirstBankAccounting = Send-FirstBankEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Rio
+        -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
     if ($respFirstBankAccounting -eq "Success") {
         Write-Output "=> First Bank email sent"
     }
@@ -273,7 +273,7 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "dave@integrid.net" # TODO: Replace w/ Tres in production (no default)
+            MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
@@ -315,7 +315,7 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "dave@integrid.net" # TODO: Replace w/ Tres in production (no default)
+            MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
@@ -349,7 +349,7 @@ elseif ($JobTitle -eq "Corporate - Management") {
     # ResMan Email
     $respResMan = Send-ResManEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "dave@integrid.net" # TODO: Remove in production; defaults to Ebonie
+        -MailRecipient "Ebonie.Smith@wynnefieldproperties.com"
     if ($respResMan -eq "Success") {
         Write-Output "=> ResMan email sent"
     }
@@ -368,7 +368,7 @@ elseif ($JobTitle -eq "Corporate - Management") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "dave@integrid.net" # TODO: Replace w/ Tres in production (no default)
+            MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
