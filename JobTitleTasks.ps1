@@ -9,10 +9,16 @@ param (
     [string]$CertificateThumbprint,
 
     [Parameter(Mandatory = $true)]
-    [int]$AutoTaskTicketId,
+    [string]$CompanyName,
 
     [Parameter(Mandatory = $true)]
-    [string]$AutoTaskTicketNumber,
+    [string]$Domain,
+
+    [Parameter(Mandatory = $true)]
+    [string]$SpSiteName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$SpListName,
 
     [Parameter(Mandatory = $true)]
     [string]$FirstName,
@@ -21,16 +27,10 @@ param (
     [string]$LastName,
 
     [Parameter(Mandatory = $true)]
-    [string]$UserPrincipalName,
-
-    [Parameter(Mandatory = $true)]
-    [string]$JobTitle,
-
-    [Parameter(Mandatory = $true)]
     [string[]]$Location,
 
     [Parameter(Mandatory = $true)]
-    [string[]]$LocationEmails,
+    [string]$JobTitle,
 
     [Parameter(Mandatory = $false)]
     [string[]]$Equipment,
@@ -42,10 +42,64 @@ param (
     [string]$CreatedByDisplayName,
 
     [Parameter(Mandatory = $true)]
+    [string]$PasswordSender,
+
+    [Parameter(Mandatory = $true)]
     [string]$LicenseName,
 
     [Parameter(Mandatory = $true)]
-    [string]$CompanyName,
+    [string]$ApprovalWebhookUrl,
+
+    [Parameter(Mandatory = $true)]
+    [string]$FollowUpAutomationAccount,
+
+    [Parameter(Mandatory = $true)]
+    [string]$FollowUpResourceGroup,
+
+    [Parameter(Mandatory = $true)]
+    [string]$FollowUpRunbook,
+
+    [Parameter(Mandatory = $true)]
+    [string]$UserPrincipalName,
+    
+    [Parameter(Mandatory = $true)]
+    [int]$AutoTaskCompanyId,
+
+    [Parameter(Mandatory = $true)]
+    [int]$HuduCompanyId,
+
+    [Parameter(Mandatory = $true)]
+    [string]$M365Location,
+
+    [Parameter(Mandatory = $true)]
+    [string]$AutoTaskLocationId,
+
+    [Parameter(Mandatory = $true)]
+    [string[]]$LocationEmails,
+
+    [Parameter(Mandatory = $true)]
+    [object]$UserData,
+
+    [Parameter(Mandatory = $true)]
+    [int]$AutoTaskTicketId,
+
+    [Parameter(Mandatory = $true)]
+    [string]$AutoTaskTicketNumber,
+
+    [Parameter(Mandatory = $true)]
+    [int]$AutoTaskContactId,
+
+    [Parameter(Mandatory = $true)]
+    [string]$HuduPasswordId,
+
+    [Parameter(Mandatory = $true)]
+    [bool]$OneTimeSecretSuccess,
+
+    [Parameter(Mandatory = $true)]
+    [obj]$LicenseData,
+
+    [Parameter(Mandatory = $true)]
+    [bool]$licenseApprovalRequired,
 
     [Parameter(Mandatory = $true)]
     [bool]$AddPax8License
