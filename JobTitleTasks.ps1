@@ -126,7 +126,8 @@ if ($JobTitle -eq "Manager") {
     # First Bank email
     $respFirstBankManager = Send-FirstBankEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
+        # -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
+        -MailRecipient "dave@integrid.net"
     if ($respFirstBankManager -eq "Success") {
         Write-Output "=> First Bank email sent"
     }
@@ -165,7 +166,8 @@ elseif ($JobTitle -eq "Regional") {
     # First Bank and Credit Card email
     $respFirstBankCCRegional = Send-FirstBankAndCreditCardEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
+        # -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
+        -MailRecipient "dave@integrid.net"
     if ($respFirstBankCCRegional -eq "Success") {
         Write-Output "=> First Bank and Credit Card email sent"
     }
@@ -176,7 +178,8 @@ elseif ($JobTitle -eq "Regional") {
     # ResMan email
     $respResMan = Send-ResManEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "Ebonie.Smith@wynnefieldproperties.com"
+        # -MailRecipient "Ebonie.Smith@wynnefieldproperties.com"
+        -MailRecipient "dave@integrid.net"
     if ($respResMan -eq "Success") {
         Write-Output "=> ResMan email sent"
     }
@@ -219,7 +222,8 @@ elseif ($JobTitle -eq "Regional") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "Chrystal.Rhodes@wynnefieldproperties.com"
+            # MailRecipient        = "Chrystal.Rhodes@wynnefieldproperties.com"
+            MailRecipient        = "dave@integrid.net"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
@@ -254,7 +258,8 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
     # First Bank Email
     $respFirstBankAccounting = Send-FirstBankEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
+        # -MailRecipient "Rio.Chamberlain@wynnefieldproperties.com"
+        -MailRecipient "dave@integrid.net"
     if ($respFirstBankAccounting -eq "Success") {
         Write-Output "=> First Bank email sent"
     }
@@ -273,7 +278,8 @@ elseif ($JobTitle -eq "Corporate - Accounting") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
+            # MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
+            MailRecipient        = "dave@integrid.net"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
@@ -315,7 +321,8 @@ elseif ($JobTitle -eq "Corporate - Compliance") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
+            # MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
+            MailRecipient        = "dave@integrid.net"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
@@ -349,7 +356,8 @@ elseif ($JobTitle -eq "Corporate - Management") {
     # ResMan Email
     $respResMan = Send-ResManEmail -FirstName $FirstName -LastName $LastName `
         -UserPrincipalName $UserPrincipalName -JobTitle $JobTitle -Location ($Location -join ", ") `
-        -MailRecipient "Ebonie.Smith@wynnefieldproperties.com"
+        # -MailRecipient "Ebonie.Smith@wynnefieldproperties.com"
+        -MailRecipient "dave@integrid.net"
     if ($respResMan -eq "Success") {
         Write-Output "=> ResMan email sent"
     }
@@ -368,7 +376,8 @@ elseif ($JobTitle -eq "Corporate - Management") {
             Location             = $Location
             EquipmentList        = $Equipment
             AutoTaskTicketNumber = $respGetTicket.item.ticketNumber
-            MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
+            # MailRecipient        = "Tres.Cobb@wynnefieldproperties.com"
+            MailRecipient        = "dave@integrid.net"
         }
         $respEquipment = Send-EquipmentApprovalEmail @equipmentParams
         if ($respEquipment -eq "Success") {
