@@ -30,7 +30,7 @@ param (
     [string[]]$Location,
 
     [Parameter(Mandatory = $true)]
-    [string[]]$CommunityEmails,
+    [string[]]$LocationEmails,
 
     [Parameter(Mandatory = $false)]
     [string[]]$Equipment,
@@ -135,9 +135,9 @@ if ($JobTitle -eq "Manager") {
     }
 
     # Add to community emails
-    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $communityEmails
+    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $LocationEmails
     if ($null -eq $respSharedMailbox) {
-        Write-Warning "Failed to add user $UserPrincipalName to community mailboxes $($communityEmails -join ", ")"
+        Write-Warning "Failed to add user $UserPrincipalName to community mailboxes $($LocationEmails -join ", ")"
     }
     else {
         foreach ($r in $respSharedMailbox) {
@@ -197,9 +197,9 @@ elseif ($JobTitle -eq "Regional") {
     }
     
     # Add to community emails
-    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $communityEmails
+    $respSharedMailbox = Grant-SharedMailboxPermissions -Requestor $UserPrincipalName -SharedMailboxes $LocationEmails
     if ($null -eq $respSharedMailbox) {
-        Write-Warning "Failed to add user $UserPrincipalName to community mailboxes $($communityEmails -join ", ")"
+        Write-Warning "Failed to add user $UserPrincipalName to community mailboxes $($LocationEmails -join ", ")"
     }
     else {
         foreach ($r in $respSharedMailbox) {
